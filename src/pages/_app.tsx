@@ -1,14 +1,15 @@
+import { Toaster } from "@/components/ui/toaster";
 import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
-import { goerli } from "viem/chains";
+import { sepolia } from "viem/chains";
 import { WagmiProvider, createConfig, http } from "wagmi";
 const queryClient = new QueryClient();
 
 export const wagmiConfig = createConfig({
-  chains: [goerli],
+  chains: [sepolia],
   transports: {
-    [goerli.id]: http(),
+    [sepolia.id]: http(),
   },
 });
 
@@ -17,6 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <Component {...pageProps} />
+        <Toaster />
       </QueryClientProvider>
     </WagmiProvider>
   );
